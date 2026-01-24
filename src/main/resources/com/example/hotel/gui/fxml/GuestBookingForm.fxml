@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.hotel.gui.controllers.GuestBookingFormController"
+            styleClass="main-container">
+
+    <!-- Header -->
+    <top>
+        <VBox styleClass="header-container" alignment="CENTER">
+            <Label text="Complete Your Booking" styleClass="header-label"/>
+            <Label text="Enter your details to confirm" styleClass="subtitle-label"/>
+        </VBox>
+    </top>
+
+    <!-- Center Content -->
+    <center>
+        <HBox spacing="40" alignment="CENTER">
+            <padding>
+                <Insets top="30" right="30" bottom="30" left="30"/>
+            </padding>
+
+            <!-- Booking Summary -->
+            <VBox spacing="15" styleClass="card" minWidth="300">
+                <Label text="Booking Summary" styleClass="title-label"/>
+                <Separator/>
+
+                <HBox spacing="10">
+                    <Label text="Room:" style="-fx-font-weight: bold;"/>
+                    <Label fx:id="roomInfoLabel"/>
+                </HBox>
+
+                <HBox spacing="10">
+                    <Label text="Dates:" style="-fx-font-weight: bold;"/>
+                    <Label fx:id="datesLabel"/>
+                </HBox>
+
+                <HBox spacing="10">
+                    <Label text="Duration:" style="-fx-font-weight: bold;"/>
+                    <Label fx:id="nightsLabel"/>
+                </HBox>
+
+                <Separator/>
+
+                <HBox spacing="10">
+                    <Label text="Subtotal:"/>
+                    <Label fx:id="subtotalLabel"/>
+                </HBox>
+
+                <HBox spacing="10">
+                    <Label text="VAT:"/>
+                    <Label fx:id="vatLabel"/>
+                </HBox>
+
+                <HBox spacing="10">
+                    <Label text="Total:" style="-fx-font-weight: bold; -fx-font-size: 18px;"/>
+                    <Label fx:id="totalLabel" style="-fx-font-weight: bold; -fx-font-size: 18px; -fx-text-fill: #2196F3;"/>
+                </HBox>
+            </VBox>
+
+            <!-- Guest Information Form -->
+            <VBox spacing="15" styleClass="card" minWidth="350">
+                <Label text="Guest Information" styleClass="title-label"/>
+                <Label fx:id="lookupLabel" text="" style="-fx-font-size: 12px;"/>
+                <Separator/>
+
+                <GridPane hgap="15" vgap="15">
+                    <Label text="Email:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                    <HBox spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                        <TextField fx:id="emailField" promptText="your@email.com" prefWidth="180"/>
+                        <Button text="Lookup" styleClass="button, button-secondary"
+                                onAction="#handleLookupGuest"/>
+                    </HBox>
+
+                    <Label text="Full Name:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                    <TextField fx:id="nameField" promptText="John Smith" prefWidth="250"
+                               GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+                    <Label text="Phone:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                    <TextField fx:id="phoneField" promptText="+1-555-123-4567" prefWidth="250"
+                               GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                </GridPane>
+
+                <Label fx:id="errorLabel" text="" style="-fx-text-fill: #F44336;"/>
+
+                <Button text="Confirm Booking" styleClass="button, button-success" prefWidth="250"
+                        onAction="#handleConfirmBooking">
+                    <VBox.margin>
+                        <Insets top="10"/>
+                    </VBox.margin>
+                </Button>
+            </VBox>
+        </HBox>
+    </center>
+
+    <!-- Footer -->
+    <bottom>
+        <HBox styleClass="footer-container" alignment="CENTER_LEFT" spacing="20">
+            <Button text="Back" styleClass="button, button-secondary"
+                    onAction="#handleBack"/>
+        </HBox>
+    </bottom>
+</BorderPane>

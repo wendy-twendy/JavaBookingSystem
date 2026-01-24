@@ -5,6 +5,7 @@ import com.example.hotel.model.enums.RoomType;
 import com.example.hotel.persistence.FileRepository;
 import com.example.hotel.persistence.RepositoryFactory;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -126,5 +127,18 @@ public class RoomService {
         return roomRepository.findAll().stream()
                 .filter(Room::isAvailable)
                 .count();
+    }
+
+    /**
+     * Get rooms that are available AND have no overlapping bookings for the specified dates.
+     * Used by the Guest Portal for browsing available rooms.
+     */
+    public List<Room> getAvailableRoomsForDates(LocalDate checkIn, LocalDate checkOut,
+                                                 BookingService bookingService) {
+        return roomRepository.findAll().stream()
+                .filter(Room::isAvailable)
+                .filter(room -> bookingService.isRoomAvailableForDates(
+                    room.getRoomNumber(), checkIn, checkOut))
+                .collect(Collectors.toList());
     }
 }

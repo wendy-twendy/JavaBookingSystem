@@ -112,6 +112,38 @@ Follow `docs/AI_GUIDE.md` and the phase documents in order:
 7. ✅ GUI Booking (Booking, BookingList, Invoice screens) - COMPLETED
 8. ✅ Testing (JUnit 5 tests) - COMPLETED
 
+## Guest Portal Feature
+
+Self-service portal for guests to browse rooms and make bookings.
+
+### Architecture
+- **State Management**: `GuestPortalState.java` - Static holder for cross-screen data flow
+- **Service Enhancements**:
+  - `BookingService.isRoomAvailableForDates()` - Date-based availability check
+  - `RoomService.getAvailableRoomsForDates()` - Filter rooms by date availability
+  - `GuestService.findOrCreateGuest()` - Lookup/create guest by email
+
+### Portal Screens
+| Screen | Controller | Purpose |
+|--------|------------|---------|
+| PortalSelection | PortalSelectionController | Entry point: Guest vs Staff |
+| GuestPortalHome | GuestPortalHomeController | Guest welcome + Browse Rooms |
+| GuestRoomBrowser | GuestRoomBrowserController | Date pickers + room cards |
+| GuestBookingForm | GuestBookingFormController | Guest info + cost summary |
+| GuestBookingConfirmation | GuestBookingConfirmationController | Booking success |
+
+### User Flow
+```
+App Start → PortalSelection
+              ├─ [Guest Portal] → GuestPortalHome → Browse → Book → Confirm
+              └─ [Staff Portal] → Dashboard (management)
+```
+
+### CSS Classes
+- `.portal-nav-button` - Large portal navigation buttons
+- `.room-card` - Room listing cards
+- `.confirmation-success` - Success styling
+
 ## Conventions
 
 - Use `Optional<T>` instead of returning null

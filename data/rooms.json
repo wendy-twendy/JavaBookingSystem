@@ -14,20 +14,6 @@
     "refundable": true
   },
   {
-    "roomNumber": "104",
-    "type": "DOUBLE",
-    "pricePerNight": 12000.0,
-    "available": true,
-    "refundable": true
-  },
-  {
-    "roomNumber": "105",
-    "type": "DOUBLE",
-    "pricePerNight": 12000.0,
-    "available": true,
-    "refundable": true
-  },
-  {
     "roomNumber": "201",
     "type": "DOUBLE",
     "pricePerNight": 13000.0,
@@ -42,20 +28,6 @@
     "refundable": false
   },
   {
-    "roomNumber": "203",
-    "type": "DOUBLE",
-    "pricePerNight": 14000.0,
-    "available": true,
-    "refundable": true
-  },
-  {
-    "roomNumber": "205",
-    "type": "SUITE",
-    "pricePerNight": 22000.0,
-    "available": true,
-    "refundable": true
-  },
-  {
     "roomNumber": "301",
     "type": "SUITE",
     "pricePerNight": 25000.0,
@@ -67,20 +39,6 @@
     "type": "SUITE",
     "pricePerNight": 28000.0,
     "available": true,
-    "refundable": true
-  },
-  {
-    "roomNumber": "103",
-    "type": "SINGLE",
-    "pricePerNight": 8500.0,
-    "available": true,
-    "refundable": false
-  },
-  {
-    "roomNumber": "204",
-    "type": "SUITE",
-    "pricePerNight": 22000.0,
-    "available": false,
     "refundable": true
   }
 ]

@@ -4,6 +4,8 @@ A Java desktop application for managing hotel bookings, built with JavaFX. This 
 
 ## Features
 
+- **Dual Portal System** - Separate interfaces for guests and staff
+- **Guest Self-Service Portal** - Guests can browse available rooms and make bookings directly
 - **Room Management** - Add, edit, and delete rooms with different types (Single, Double, Suite)
 - **Guest Management** - Maintain guest records with contact information
 - **Booking System** - Create bookings with automatic price calculation including VAT
@@ -79,7 +81,9 @@ Start the application with:
 mvn javafx:run
 ```
 
-The Hotel Booking System window will open, displaying the Dashboard.
+The Hotel Booking System window will open, displaying the Portal Selection screen with two options:
+- **Guest Portal** - Self-service booking for guests
+- **Staff Portal** - Management dashboard for hotel staff
 
 ## Project Structure
 
@@ -105,7 +109,34 @@ BookingSystem/
 
 ## Usage Guide
 
-### Dashboard
+### Portal Selection
+
+When the app starts, choose your portal:
+- **Guest Portal** - For guests to browse and book rooms
+- **Staff Portal** - For hotel staff to manage rooms, guests, and bookings
+
+### Guest Portal
+
+The guest self-service flow:
+
+1. **Browse Rooms**
+   - Select check-in and check-out dates
+   - View available rooms with prices
+   - Each room card shows type, price per night, and refund policy
+
+2. **Book a Room**
+   - Click "Book This Room" on your preferred room
+   - Enter your email (returning guests are auto-detected)
+   - Fill in name and phone number
+   - Review the cost summary (includes VAT)
+   - Click "Confirm Booking"
+
+3. **Confirmation**
+   - View your booking confirmation number
+   - See booking details and total cost
+   - Click "Done" to return home or "Book Another Room"
+
+### Staff Dashboard
 
 The main screen shows:
 - Total number of rooms in the system
@@ -315,10 +346,22 @@ The GUI follows the Model-View-Controller pattern:
 - **CSS styling** provides consistent appearance
 
 ```
-Dashboard.fxml  ←→  DashboardController.java
-Booking.fxml    ←→  BookingController.java
-Invoice.fxml    ←→  InvoiceController.java
+Portal Selection:
+PortalSelection.fxml     ←→  PortalSelectionController.java
+
+Guest Portal:
+GuestPortalHome.fxml     ←→  GuestPortalHomeController.java
+GuestRoomBrowser.fxml    ←→  GuestRoomBrowserController.java
+GuestBookingForm.fxml    ←→  GuestBookingFormController.java
+GuestBookingConfirmation.fxml ←→ GuestBookingConfirmationController.java
+
+Staff Portal:
+Dashboard.fxml           ←→  DashboardController.java
+Booking.fxml             ←→  BookingController.java
+Invoice.fxml             ←→  InvoiceController.java
 ```
+
+**Cross-screen state:** `GuestPortalState.java` manages data flow between guest portal screens.
 
 **See:** `gui/fxml/` for views, `gui/controllers/` for controllers
 

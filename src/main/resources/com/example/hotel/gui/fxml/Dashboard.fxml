@@ -88,6 +88,7 @@
     <!-- Footer/Status Bar -->
     <bottom>
         <HBox styleClass="footer-container" alignment="CENTER_LEFT" spacing="20">
+            <Button text="Back" styleClass="button, button-secondary" onAction="#handleBack"/>
             <Label fx:id="statusLabel" text="Ready" styleClass="status-bar"/>
         </HBox>
     </bottom>

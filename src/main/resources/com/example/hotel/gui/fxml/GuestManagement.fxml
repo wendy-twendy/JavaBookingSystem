@@ -78,13 +78,13 @@
                 <!-- Action Buttons -->
                 <HBox spacing="10">
                     <Button fx:id="addBtn" text="Add" styleClass="button, button-success"
-                            onAction="#handleAdd"/>
+                            onAction="#handleAdd" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
                     <Button fx:id="updateBtn" text="Update" styleClass="button, button-primary"
-                            onAction="#handleUpdate"/>
+                            onAction="#handleUpdate" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
                     <Button fx:id="deleteBtn" text="Delete" styleClass="button, button-danger"
-                            onAction="#handleDelete"/>
+                            onAction="#handleDelete" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
                     <Button fx:id="clearBtn" text="Clear" styleClass="button, button-secondary"
-                            onAction="#handleClear"/>
+                            onAction="#handleClear" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
                 </HBox>
             </VBox>
         </HBox>

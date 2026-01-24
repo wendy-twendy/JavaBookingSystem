@@ -25,7 +25,7 @@ public class App extends Application {
         primaryStage.setMinWidth(800);
         primaryStage.setMinHeight(600);
 
-        showDashboard();
+        showPortalSelection();
         primaryStage.show();
     }
 
@@ -70,7 +70,15 @@ public class App extends Application {
     }
 
     /**
-     * Shows the Dashboard view.
+     * Shows the Portal Selection view (app entry point).
+     */
+    public static void showPortalSelection() {
+        Parent root = loadView("PortalSelection");
+        setScene(root);
+    }
+
+    /**
+     * Shows the Dashboard view (Staff Portal).
      */
     public static void showDashboard() {
         Parent root = loadView("Dashboard");
@@ -135,6 +143,54 @@ public class App extends Application {
             setScene(root);
         } catch (RuntimeException e) {
             System.err.println("Invoice view not yet implemented");
+        }
+    }
+
+    /**
+     * Shows the Guest Portal Home view.
+     */
+    public static void showGuestPortalHome() {
+        try {
+            Parent root = loadView("GuestPortalHome");
+            setScene(root);
+        } catch (RuntimeException e) {
+            System.err.println("Guest Portal Home view not yet implemented");
+        }
+    }
+
+    /**
+     * Shows the Guest Room Browser view.
+     */
+    public static void showGuestRoomBrowser() {
+        try {
+            Parent root = loadView("GuestRoomBrowser");
+            setScene(root);
+        } catch (RuntimeException e) {
+            System.err.println("Guest Room Browser view not yet implemented");
+        }
+    }
+
+    /**
+     * Shows the Guest Booking Form view.
+     */
+    public static void showGuestBookingForm() {
+        try {
+            Parent root = loadView("GuestBookingForm");
+            setScene(root);
+        } catch (RuntimeException e) {
+            System.err.println("Guest Booking Form view not yet implemented");
+        }
+    }
+
+    /**
+     * Shows the Guest Booking Confirmation view.
+     */
+    public static void showGuestBookingConfirmation() {
+        try {
+            Parent root = loadView("GuestBookingConfirmation");
+            setScene(root);
+        } catch (RuntimeException e) {
+            System.err.println("Guest Booking Confirmation view not yet implemented");
         }
     }
 

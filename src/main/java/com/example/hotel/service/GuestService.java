@@ -119,6 +119,18 @@ public class GuestService {
     }
 
     /**
+     * Find an existing guest by email or create a new one.
+     * Used by the Guest Portal for self-service bookings.
+     */
+    public Guest findOrCreateGuest(String name, String phone, String email) {
+        Optional<Guest> existing = findByEmail(email);
+        if (existing.isPresent()) {
+            return existing.get();
+        }
+        return addGuest(name, phone, email);
+    }
+
+    /**
      * Generate a unique guest ID.
      */
     private String generateGuestId() {

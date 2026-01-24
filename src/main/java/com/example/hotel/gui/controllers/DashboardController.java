@@ -104,6 +104,11 @@ public class DashboardController {
         refreshStatistics();
     }
 
+    @FXML
+    private void handleBack() {
+        App.showPortalSelection();
+    }
+
     private void updateStatus(String message) {
         statusLabel.setText(message);
     }

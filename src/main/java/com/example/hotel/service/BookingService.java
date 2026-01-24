@@ -227,6 +227,14 @@ public class BookingService {
     }
 
     /**
+     * Check if a room is available for the specified dates.
+     * Exposes the overlapping booking check for external use.
+     */
+    public boolean isRoomAvailableForDates(String roomNumber, LocalDate checkIn, LocalDate checkOut) {
+        return !hasOverlappingBooking(roomNumber, checkIn, checkOut);
+    }
+
+    /**
      * Check if there's an overlapping booking for the room.
      */
     private boolean hasOverlappingBooking(String roomNumber,
