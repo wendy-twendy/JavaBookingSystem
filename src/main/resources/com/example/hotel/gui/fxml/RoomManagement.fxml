@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.hotel.gui.controllers.RoomManagementController"
+            styleClass="main-container">
+
+    <!-- Header -->
+    <top>
+        <VBox styleClass="header-container" alignment="CENTER">
+            <HBox alignment="CENTER_LEFT" spacing="20">
+                <Button text="Back to Dashboard" styleClass="button, button-secondary"
+                        onAction="#handleBackToDashboard"/>
+                <Label text="Room Management" styleClass="header-label" HBox.hgrow="ALWAYS"/>
+            </HBox>
+        </VBox>
+    </top>
+
+    <!-- Center Content -->
+    <center>
+        <HBox spacing="20">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+
+            <!-- Left Panel - Table -->
+            <VBox spacing="10" HBox.hgrow="ALWAYS">
+                <Label text="Room List" styleClass="title-label"/>
+                <TableView fx:id="roomTable" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colRoomNumber" text="Room Number" prefWidth="100"/>
+                        <TableColumn fx:id="colType" text="Type" prefWidth="120"/>
+                        <TableColumn fx:id="colPrice" text="Price/Night" prefWidth="100"/>
+                        <TableColumn fx:id="colAvailable" text="Available" prefWidth="80"/>
+                        <TableColumn fx:id="colRefundable" text="Refundable" prefWidth="80"/>
+                    </columns>
+                </TableView>
+            </VBox>
+
+            <!-- Right Panel - Form -->
+            <VBox spacing="15" styleClass="card" minWidth="300" maxWidth="350">
+                <Label text="Room Details" styleClass="title-label"/>
+
+                <!-- Room Number -->
+                <VBox spacing="5">
+                    <Label text="Room Number"/>
+                    <TextField fx:id="roomNumberField" promptText="e.g., 101, A-201"/>
+                </VBox>
+
+                <!-- Room Type -->
+                <VBox spacing="5">
+                    <Label text="Room Type"/>
+                    <ComboBox fx:id="roomTypeCombo" maxWidth="Infinity"/>
+                </VBox>
+
+                <!-- Price per Night -->
+                <VBox spacing="5">
+                    <Label text="Price per Night"/>
+                    <TextField fx:id="priceField" promptText="e.g., 150.00"/>
+                </VBox>
+
+                <!-- Checkboxes -->
+                <HBox spacing="20">
+                    <CheckBox fx:id="availableCheck" text="Available"/>
+                    <CheckBox fx:id="refundableCheck" text="Refundable"/>
+                </HBox>
+
+                <!-- Action Buttons -->
+                <HBox spacing="10">
+                    <Button fx:id="addBtn" text="Add" styleClass="button, button-success"
+                            onAction="#handleAdd"/>
+                    <Button fx:id="updateBtn" text="Update" styleClass="button, button-primary"
+                            onAction="#handleUpdate"/>
+                    <Button fx:id="deleteBtn" text="Delete" styleClass="button, button-danger"
+                            onAction="#handleDelete"/>
+                    <Button fx:id="clearBtn" text="Clear" styleClass="button, button-secondary"
+                            onAction="#handleClear"/>
+                </HBox>
+            </VBox>
+        </HBox>
+    </center>
+
+    <!-- Footer -->
+    <bottom>
+        <HBox styleClass="footer-container" alignment="CENTER_LEFT" spacing="20">
+            <TextField fx:id="searchField" promptText="Search by room number..." prefWidth="250"
+                       onAction="#handleSearch"/>
+            <Button text="Search" styleClass="button, button-primary" onAction="#handleSearch"/>
+            <Label fx:id="statusLabel" text="Ready" styleClass="status-bar" HBox.hgrow="ALWAYS"/>
+        </HBox>
+    </bottom>
+</BorderPane>

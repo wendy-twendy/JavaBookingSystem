@@ -1,0 +1,6 @@
+{
+    "vatRate": 0.20,
+    "currency": "ALL",
+    "hotelName": "Hotel Tirana",
+    "defaultRefundPolicy": "TIERED"
+}

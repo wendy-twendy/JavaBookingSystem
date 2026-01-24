@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.hotel.gui.controllers.GuestManagementController"
+            styleClass="main-container">
+
+    <!-- Header -->
+    <top>
+        <VBox styleClass="header-container" alignment="CENTER">
+            <HBox alignment="CENTER_LEFT" spacing="20">
+                <Button text="Back to Dashboard" styleClass="button, button-secondary"
+                        onAction="#handleBackToDashboard"/>
+                <Label text="Guest Management" styleClass="header-label" HBox.hgrow="ALWAYS"/>
+            </HBox>
+        </VBox>
+    </top>
+
+    <!-- Center Content -->
+    <center>
+        <HBox spacing="20">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+
+            <!-- Left Panel - Table -->
+            <VBox spacing="10" HBox.hgrow="ALWAYS">
+                <Label text="Guest List" styleClass="title-label"/>
+                <TableView fx:id="guestTable" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colGuestId" text="Guest ID" prefWidth="120"/>
+                        <TableColumn fx:id="colName" text="Name" prefWidth="150"/>
+                        <TableColumn fx:id="colPhone" text="Phone" prefWidth="120"/>
+                        <TableColumn fx:id="colEmail" text="Email" prefWidth="200"/>
+                    </columns>
+                </TableView>
+            </VBox>
+
+            <!-- Right Panel - Form -->
+            <VBox spacing="15" styleClass="card" minWidth="300" maxWidth="350">
+                <Label text="Guest Details" styleClass="title-label"/>
+
+                <!-- Guest ID (readonly) -->
+                <VBox spacing="5">
+                    <Label text="Guest ID"/>
+                    <TextField fx:id="guestIdField" editable="false"
+                               promptText="Auto-generated" styleClass="text-field"/>
+                </VBox>
+
+                <!-- Name -->
+                <VBox spacing="5">
+                    <Label text="Name *"/>
+                    <TextField fx:id="nameField" promptText="Full name"/>
+                </VBox>
+
+                <!-- Phone -->
+                <VBox spacing="5">
+                    <Label text="Phone *"/>
+                    <TextField fx:id="phoneField" promptText="e.g., +1234567890"/>
+                </VBox>
+
+                <!-- Email -->
+                <VBox spacing="5">
+                    <Label text="Email *"/>
+                    <TextField fx:id="emailField" promptText="email@example.com"/>
+                </VBox>
+
+                <!-- Action Buttons -->
+                <HBox spacing="10">
+                    <Button fx:id="addBtn" text="Add" styleClass="button, button-success"
+                            onAction="#handleAdd"/>
+                    <Button fx:id="updateBtn" text="Update" styleClass="button, button-primary"
+                            onAction="#handleUpdate"/>
+                    <Button fx:id="deleteBtn" text="Delete" styleClass="button, button-danger"
+                            onAction="#handleDelete"/>
+                    <Button fx:id="clearBtn" text="Clear" styleClass="button, button-secondary"
+                            onAction="#handleClear"/>
+                </HBox>
+            </VBox>
+        </HBox>
+    </center>
+
+    <!-- Footer -->
+    <bottom>
+        <HBox styleClass="footer-container" alignment="CENTER_LEFT" spacing="20">
+            <TextField fx:id="searchField" promptText="Search by name..." prefWidth="250"
+                       onAction="#handleSearch"/>
+            <Button text="Search" styleClass="button, button-primary" onAction="#handleSearch"/>
+            <Label fx:id="statusLabel" text="Ready" styleClass="status-bar" HBox.hgrow="ALWAYS"/>
+        </HBox>
+    </bottom>
+</BorderPane>

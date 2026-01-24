@@ -1,0 +1,22 @@
+[
+  {
+    "bookingId": "BK-709437A4",
+    "guestId": "G-99AE7D44",
+    "roomNumber": "103",
+    "checkInDate": "2026-01-24",
+    "checkOutDate": "2026-01-25",
+    "status": "COMPLETED",
+    "totalCost": 10200.0,
+    "refundAmount": 0.0
+  },
+  {
+    "bookingId": "BK-A601864F",
+    "guestId": "G-99AE7D44",
+    "roomNumber": "204",
+    "checkInDate": "2026-01-28",
+    "checkOutDate": "2026-01-31",
+    "status": "CONFIRMED",
+    "totalCost": 79200.0,
+    "refundAmount": 0.0
+  }
+]

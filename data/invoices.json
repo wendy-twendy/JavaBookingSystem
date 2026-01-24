@@ -1,0 +1,12 @@
+[
+  {
+    "invoiceId": "INV-C8745583",
+    "bookingId": "BK-709437A4",
+    "generatedAt": "2026-01-24T19:28:07.221305",
+    "subtotal": 8500.0,
+    "vatRate": 0.2,
+    "vat": 1700.0,
+    "total": 10200.0,
+    "refundAmount": 0.0
+  }
+]
