@@ -68,10 +68,6 @@ Should display: `Apache Maven 3.x.x`
    mvn compile
    ```
 
-3. **Run tests (optional)**
-   ```cmd
-   mvn test
-   ```
 
 ## Running the Application
 
@@ -246,7 +242,6 @@ If Maven fails to download dependencies:
 | Command | Description |
 |---------|-------------|
 | `mvn compile` | Compile the project |
-| `mvn test` | Run all unit tests |
 | `mvn javafx:run` | Run the application |
 | `mvn clean` | Clean build artifacts |
 | `mvn clean compile` | Clean and recompile |
