@@ -15,26 +15,25 @@ import java.util.UUID;
 /**
  * Service for generating and managing invoices.
  */
-public class InvoiceService {
+public class InvoiceService extends AbstractService<Invoice> {
 
-    private final FileRepository<Invoice, String> invoiceRepository;
     private final BookingService bookingService;
     private final RoomService roomService;
     private final Settings settings;
 
     public InvoiceService() {
-        this.invoiceRepository = RepositoryFactory.getInstance().getInvoiceRepository();
+        super(RepositoryFactory.getInstance().getInvoiceRepository());
         this.bookingService = new BookingService();
         this.roomService = new RoomService();
         this.settings = Settings.getInstance();
     }
 
     // Constructor for testing
-    public InvoiceService(FileRepository<Invoice, String> invoiceRepository,
+    public InvoiceService(FileRepository<Invoice, String> repository,
                           BookingService bookingService,
                           RoomService roomService,
                           Settings settings) {
-        this.invoiceRepository = invoiceRepository;
+        super(repository);
         this.bookingService = bookingService;
         this.roomService = roomService;
         this.settings = settings;
@@ -44,21 +43,14 @@ public class InvoiceService {
      * Get all invoices.
      */
     public List<Invoice> getAllInvoices() {
-        return invoiceRepository.findAll();
-    }
-
-    /**
-     * Find an invoice by ID.
-     */
-    public Optional<Invoice> findById(String invoiceId) {
-        return invoiceRepository.findById(invoiceId);
+        return getAll();
     }
 
     /**
      * Find invoice by booking ID.
      */
     public Optional<Invoice> findByBookingId(String bookingId) {
-        return invoiceRepository.findAll().stream()
+        return repository.findAll().stream()
                 .filter(inv -> inv.getBookingId().equals(bookingId))
                 .findFirst();
     }
@@ -105,7 +97,7 @@ public class InvoiceService {
         // Set refund if booking was cancelled
         invoice.setRefundAmount(booking.getRefundAmount());
 
-        invoiceRepository.save(invoice);
+        repository.save(invoice);
         return invoice;
     }
 
@@ -118,7 +110,7 @@ public class InvoiceService {
                     "Invoice for booking " + bookingId + " not found"));
 
         invoice.setRefundAmount(refundAmount);
-        invoiceRepository.save(invoice);
+        repository.save(invoice);
         return invoice;
     }
 

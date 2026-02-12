@@ -6,7 +6,11 @@ import java.time.LocalDate;
 /**
  * Full refund policy - always refunds the full amount.
  */
-public class FullRefundPolicy implements RefundPolicy {
+public class FullRefundPolicy extends AbstractRefundPolicy {
+
+    public FullRefundPolicy() {
+        super("Full Refund");
+    }
 
     @Override
     public double calculateRefund(Booking booking, LocalDate cancelDate) {

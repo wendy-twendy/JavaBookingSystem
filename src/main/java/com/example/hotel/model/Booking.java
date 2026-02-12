@@ -2,9 +2,8 @@ package com.example.hotel.model;
 
 import com.example.hotel.model.enums.BookingStatus;
 import java.time.LocalDate;
-import java.util.Objects;
 
-public class Booking {
+public class Booking extends AbstractEntity {
     private String bookingId;
     private String guestId;
     private String roomNumber;
@@ -29,6 +28,11 @@ public class Booking {
         this.status = status;
         this.totalCost = totalCost;
         this.refundAmount = 0.0;
+    }
+
+    @Override
+    public String getId() {
+        return bookingId;
     }
 
     // Getters and Setters
@@ -104,19 +108,6 @@ public class Booking {
             return 0;
         }
         return java.time.temporal.ChronoUnit.DAYS.between(checkInDate, checkOutDate);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Booking booking = (Booking) o;
-        return Objects.equals(bookingId, booking.bookingId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(bookingId);
     }
 
     @Override

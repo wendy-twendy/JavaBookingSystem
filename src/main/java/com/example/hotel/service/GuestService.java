@@ -13,31 +13,22 @@ import java.util.stream.Collectors;
  * Service for managing guests.
  * Contains business logic for guest operations.
  */
-public class GuestService {
-
-    private final FileRepository<Guest, String> guestRepository;
+public class GuestService extends AbstractService<Guest> {
 
     public GuestService() {
-        this.guestRepository = RepositoryFactory.getInstance().getGuestRepository();
+        super(RepositoryFactory.getInstance().getGuestRepository());
     }
 
     // Constructor for testing with mock repository
     public GuestService(FileRepository<Guest, String> guestRepository) {
-        this.guestRepository = guestRepository;
+        super(guestRepository);
     }
 
     /**
      * Get all guests.
      */
     public List<Guest> getAllGuests() {
-        return guestRepository.findAll();
-    }
-
-    /**
-     * Find a guest by ID.
-     */
-    public Optional<Guest> findById(String guestId) {
-        return guestRepository.findById(guestId);
+        return getAll();
     }
 
     /**
@@ -47,7 +38,7 @@ public class GuestService {
     public Guest addGuest(String name, String phone, String email) {
         String id = generateGuestId();
         Guest guest = new Guest(id, name, phone, email);
-        guestRepository.save(guest);
+        repository.save(guest);
         return guest;
     }
 
@@ -58,29 +49,29 @@ public class GuestService {
         if (guest.getId() == null || guest.getId().isEmpty()) {
             guest.setId(generateGuestId());
         }
-        if (guestRepository.existsById(guest.getId())) {
+        if (repository.existsById(guest.getId())) {
             throw new IllegalArgumentException(
                 "Guest with ID " + guest.getId() + " already exists");
         }
-        guestRepository.save(guest);
+        repository.save(guest);
     }
 
     /**
      * Update an existing guest.
      */
     public void updateGuest(Guest guest) {
-        if (!guestRepository.existsById(guest.getId())) {
+        if (!repository.existsById(guest.getId())) {
             throw new IllegalArgumentException(
                 "Guest with ID " + guest.getId() + " not found");
         }
-        guestRepository.save(guest);
+        repository.save(guest);
     }
 
     /**
      * Delete a guest by ID.
      */
     public boolean deleteGuest(String guestId) {
-        return guestRepository.delete(guestId);
+        return delete(guestId);
     }
 
     /**
@@ -88,7 +79,7 @@ public class GuestService {
      */
     public List<Guest> searchByName(String searchTerm) {
         String lowerSearch = searchTerm.toLowerCase();
-        return guestRepository.findAll().stream()
+        return repository.findAll().stream()
                 .filter(guest -> guest.getName().toLowerCase().contains(lowerSearch))
                 .collect(Collectors.toList());
     }
@@ -97,7 +88,7 @@ public class GuestService {
      * Find guest by email.
      */
     public Optional<Guest> findByEmail(String email) {
-        return guestRepository.findAll().stream()
+        return repository.findAll().stream()
                 .filter(guest -> guest.getEmail().equalsIgnoreCase(email))
                 .findFirst();
     }
@@ -106,7 +97,7 @@ public class GuestService {
      * Find guest by phone number.
      */
     public Optional<Guest> findByPhone(String phone) {
-        return guestRepository.findAll().stream()
+        return repository.findAll().stream()
                 .filter(guest -> guest.getPhone().equals(phone))
                 .findFirst();
     }
@@ -115,7 +106,7 @@ public class GuestService {
      * Get total guest count.
      */
     public long getGuestCount() {
-        return guestRepository.count();
+        return count();
     }
 
     /**

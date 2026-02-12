@@ -19,22 +19,21 @@ import java.util.stream.Collectors;
  * Service for managing bookings.
  * Contains business logic for booking operations including pricing and refunds.
  */
-public class BookingService {
+public class BookingService extends AbstractService<Booking> {
 
-    private final FileRepository<Booking, String> bookingRepository;
     private final RoomService roomService;
     private final Settings settings;
 
     public BookingService() {
-        this.bookingRepository = RepositoryFactory.getInstance().getBookingRepository();
+        super(RepositoryFactory.getInstance().getBookingRepository());
         this.roomService = new RoomService();
         this.settings = Settings.getInstance();
     }
 
     // Constructor for testing
-    public BookingService(FileRepository<Booking, String> bookingRepository,
+    public BookingService(FileRepository<Booking, String> repository,
                           RoomService roomService, Settings settings) {
-        this.bookingRepository = bookingRepository;
+        super(repository);
         this.roomService = roomService;
         this.settings = settings;
     }
@@ -43,14 +42,7 @@ public class BookingService {
      * Get all bookings.
      */
     public List<Booking> getAllBookings() {
-        return bookingRepository.findAll();
-    }
-
-    /**
-     * Find a booking by ID.
-     */
-    public Optional<Booking> findById(String bookingId) {
-        return bookingRepository.findById(bookingId);
+        return getAll();
     }
 
     /**
@@ -93,7 +85,7 @@ public class BookingService {
         );
 
         // Save booking and update room availability
-        bookingRepository.save(booking);
+        repository.save(booking);
         roomService.setAvailability(roomNumber, false);
 
         return booking;
@@ -104,7 +96,7 @@ public class BookingService {
      * @return The updated booking with refund amount
      */
     public Booking cancelBooking(String bookingId) {
-        Booking booking = bookingRepository.findById(bookingId)
+        Booking booking = repository.findById(bookingId)
                 .orElseThrow(() -> new IllegalArgumentException(
                     "Booking " + bookingId + " not found"));
 
@@ -127,7 +119,7 @@ public class BookingService {
         // Update booking
         booking.setStatus(BookingStatus.CANCELLED);
         booking.setRefundAmount(refundAmount);
-        bookingRepository.save(booking);
+        repository.save(booking);
 
         // Free up the room
         if (room != null) {
@@ -141,7 +133,7 @@ public class BookingService {
      * Complete a booking (guest checked out).
      */
     public Booking completeBooking(String bookingId) {
-        Booking booking = bookingRepository.findById(bookingId)
+        Booking booking = repository.findById(bookingId)
                 .orElseThrow(() -> new IllegalArgumentException(
                     "Booking " + bookingId + " not found"));
 
@@ -151,7 +143,7 @@ public class BookingService {
         }
 
         booking.setStatus(BookingStatus.COMPLETED);
-        bookingRepository.save(booking);
+        repository.save(booking);
 
         // Free up the room
         roomService.setAvailability(booking.getRoomNumber(), true);
@@ -163,7 +155,7 @@ public class BookingService {
      * Get bookings for a specific guest.
      */
     public List<Booking> getBookingsByGuest(String guestId) {
-        return bookingRepository.findAll().stream()
+        return repository.findAll().stream()
                 .filter(b -> b.getGuestId().equals(guestId))
                 .collect(Collectors.toList());
     }
@@ -172,7 +164,7 @@ public class BookingService {
      * Get bookings for a specific room.
      */
     public List<Booking> getBookingsByRoom(String roomNumber) {
-        return bookingRepository.findAll().stream()
+        return repository.findAll().stream()
                 .filter(b -> b.getRoomNumber().equals(roomNumber))
                 .collect(Collectors.toList());
     }
@@ -181,7 +173,7 @@ public class BookingService {
      * Get active (confirmed) bookings.
      */
     public List<Booking> getActiveBookings() {
-        return bookingRepository.findAll().stream()
+        return repository.findAll().stream()
                 .filter(b -> b.getStatus() == BookingStatus.CONFIRMED)
                 .collect(Collectors.toList());
     }
@@ -239,7 +231,7 @@ public class BookingService {
      */
     private boolean hasOverlappingBooking(String roomNumber,
                                           LocalDate checkIn, LocalDate checkOut) {
-        return bookingRepository.findAll().stream()
+        return repository.findAll().stream()
                 .filter(b -> b.getRoomNumber().equals(roomNumber))
                 .filter(b -> b.getStatus() == BookingStatus.CONFIRMED)
                 .anyMatch(b -> datesOverlap(

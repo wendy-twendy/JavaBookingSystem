@@ -1,9 +1,8 @@
 package com.example.hotel.model;
 
 import java.time.LocalDateTime;
-import java.util.Objects;
 
-public class Invoice {
+public class Invoice extends AbstractEntity {
     private String invoiceId;
     private String bookingId;
     private LocalDateTime generatedAt;
@@ -27,6 +26,11 @@ public class Invoice {
         this.vat = vat;
         this.total = total;
         this.refundAmount = 0.0;
+    }
+
+    @Override
+    public String getId() {
+        return invoiceId;
     }
 
     // Getters and Setters
@@ -99,19 +103,6 @@ public class Invoice {
      */
     public double getFinalAmount() {
         return total - refundAmount;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Invoice invoice = (Invoice) o;
-        return Objects.equals(invoiceId, invoice.invoiceId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(invoiceId);
     }
 
     @Override

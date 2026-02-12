@@ -1,9 +1,8 @@
 package com.example.hotel.model;
 
 import com.example.hotel.model.enums.RoomType;
-import java.util.Objects;
 
-public class Room {
+public class Room extends AbstractEntity {
     private String roomNumber;
     private RoomType type;
     private double pricePerNight;
@@ -21,6 +20,11 @@ public class Room {
         this.pricePerNight = pricePerNight;
         this.available = available;
         this.refundable = refundable;
+    }
+
+    @Override
+    public String getId() {
+        return roomNumber;
     }
 
     // Getters and Setters
@@ -65,19 +69,6 @@ public class Room {
 
     public void setRefundable(boolean refundable) {
         this.refundable = refundable;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Room room = (Room) o;
-        return Objects.equals(roomNumber, room.roomNumber);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(roomNumber);
     }
 
     @Override

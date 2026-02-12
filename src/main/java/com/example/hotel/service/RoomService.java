@@ -14,31 +14,29 @@ import java.util.stream.Collectors;
  * Service for managing rooms.
  * Contains business logic for room operations.
  */
-public class RoomService {
-
-    private final FileRepository<Room, String> roomRepository;
+public class RoomService extends AbstractService<Room> {
 
     public RoomService() {
-        this.roomRepository = RepositoryFactory.getInstance().getRoomRepository();
+        super(RepositoryFactory.getInstance().getRoomRepository());
     }
 
     // Constructor for testing with mock repository
     public RoomService(FileRepository<Room, String> roomRepository) {
-        this.roomRepository = roomRepository;
+        super(roomRepository);
     }
 
     /**
      * Get all rooms.
      */
     public List<Room> getAllRooms() {
-        return roomRepository.findAll();
+        return getAll();
     }
 
     /**
      * Find a room by room number.
      */
     public Optional<Room> findByRoomNumber(String roomNumber) {
-        return roomRepository.findById(roomNumber);
+        return findById(roomNumber);
     }
 
     /**
@@ -46,11 +44,11 @@ public class RoomService {
      * @throws IllegalArgumentException if room number already exists
      */
     public void addRoom(Room room) {
-        if (roomRepository.existsById(room.getRoomNumber())) {
+        if (repository.existsById(room.getRoomNumber())) {
             throw new IllegalArgumentException(
                 "Room with number " + room.getRoomNumber() + " already exists");
         }
-        roomRepository.save(room);
+        repository.save(room);
     }
 
     /**
@@ -58,11 +56,11 @@ public class RoomService {
      * @throws IllegalArgumentException if room doesn't exist
      */
     public void updateRoom(Room room) {
-        if (!roomRepository.existsById(room.getRoomNumber())) {
+        if (!repository.existsById(room.getRoomNumber())) {
             throw new IllegalArgumentException(
                 "Room with number " + room.getRoomNumber() + " not found");
         }
-        roomRepository.save(room);
+        repository.save(room);
     }
 
     /**
@@ -70,14 +68,14 @@ public class RoomService {
      * @return true if deleted, false if not found
      */
     public boolean deleteRoom(String roomNumber) {
-        return roomRepository.delete(roomNumber);
+        return delete(roomNumber);
     }
 
     /**
      * Get all available rooms.
      */
     public List<Room> getAvailableRooms() {
-        return roomRepository.findAll().stream()
+        return repository.findAll().stream()
                 .filter(Room::isAvailable)
                 .collect(Collectors.toList());
     }
@@ -86,7 +84,7 @@ public class RoomService {
      * Get available rooms of a specific type.
      */
     public List<Room> getAvailableRoomsByType(RoomType type) {
-        return roomRepository.findAll().stream()
+        return repository.findAll().stream()
                 .filter(Room::isAvailable)
                 .filter(room -> room.getType() == type)
                 .collect(Collectors.toList());
@@ -97,7 +95,7 @@ public class RoomService {
      */
     public List<Room> searchByRoomNumber(String searchTerm) {
         String lowerSearch = searchTerm.toLowerCase();
-        return roomRepository.findAll().stream()
+        return repository.findAll().stream()
                 .filter(room -> room.getRoomNumber().toLowerCase().contains(lowerSearch))
                 .collect(Collectors.toList());
     }
@@ -106,25 +104,25 @@ public class RoomService {
      * Set room availability.
      */
     public void setAvailability(String roomNumber, boolean available) {
-        Room room = roomRepository.findById(roomNumber)
+        Room room = findById(roomNumber)
                 .orElseThrow(() -> new IllegalArgumentException(
                     "Room " + roomNumber + " not found"));
         room.setAvailable(available);
-        roomRepository.save(room);
+        repository.save(room);
     }
 
     /**
      * Get total room count.
      */
     public long getTotalRoomCount() {
-        return roomRepository.count();
+        return count();
     }
 
     /**
      * Get available room count.
      */
     public long getAvailableRoomCount() {
-        return roomRepository.findAll().stream()
+        return repository.findAll().stream()
                 .filter(Room::isAvailable)
                 .count();
     }
@@ -135,7 +133,7 @@ public class RoomService {
      */
     public List<Room> getAvailableRoomsForDates(LocalDate checkIn, LocalDate checkOut,
                                                  BookingService bookingService) {
-        return roomRepository.findAll().stream()
+        return repository.findAll().stream()
                 .filter(Room::isAvailable)
                 .filter(room -> bookingService.isRoomAvailableForDates(
                     room.getRoomNumber(), checkIn, checkOut))

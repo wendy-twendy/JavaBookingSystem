@@ -10,7 +10,11 @@ import java.time.temporal.ChronoUnit;
  * - 3-6 days: 50% refund
  * - Less than 3 days: No refund
  */
-public class TieredRefundPolicy implements RefundPolicy {
+public class TieredRefundPolicy extends AbstractRefundPolicy {
+
+    public TieredRefundPolicy() {
+        super("Tiered Refund");
+    }
 
     private static final int FULL_REFUND_DAYS = 7;
     private static final int PARTIAL_REFUND_DAYS = 3;

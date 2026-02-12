@@ -1,8 +1,6 @@
 package com.example.hotel.model;
 
-import java.util.Objects;
-
-public class Guest {
+public class Guest extends AbstractEntity {
     private String id;
     private String name;
     private String phone;
@@ -20,6 +18,7 @@ public class Guest {
     }
 
     // Getters and Setters
+    @Override
     public String getId() {
         return id;
     }
@@ -50,19 +49,6 @@ public class Guest {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Guest guest = (Guest) o;
-        return Objects.equals(id, guest.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
     }
 
     @Override

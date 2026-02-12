@@ -74,12 +74,31 @@ GUI (Controllers) → Services → Repositories → File System (JSON)
 - **Controllers**: Thin, delegate to services, no business logic
 - **Services**: Business logic only, no GUI code
 - **Repositories**: Generic `Repository<T>` interface with `FileRepository<T>` implementation
-- **Models**: POJOs with validation in setters
+- **Models**: POJOs extending `AbstractEntity` base class, with validation in setters
 
 ## Key Implementation Notes
 
+### Abstract Classes
+
+Three abstract classes reduce code duplication and demonstrate OOP inheritance:
+
+**`AbstractEntity`** (model base class):
+- All 4 model classes (Room, Guest, Booking, Invoice) extend this
+- Provides shared `equals()`/`hashCode()` based on `getId()`
+- Each subclass implements `abstract String getId()` returning its specific ID field
+
+**`AbstractRefundPolicy`** (policy base class):
+- Sits between `RefundPolicy` interface and concrete implementations
+- Provides shared `policyName` field, `getPolicyName()`, and `toString()`
+- Hierarchy: `RefundPolicy` (interface) → `AbstractRefundPolicy` (abstract) → concrete classes
+
+**`AbstractService<T>`** (service base class):
+- All 4 service classes extend this with their entity type
+- Provides shared `getAll()`, `findById()`, `delete()`, `count()` methods
+- Holds `protected final FileRepository<T, String> repository`
+
 ### Polymorphism via RefundPolicy
-Three implementations of `RefundPolicy` interface:
+Three implementations via `AbstractRefundPolicy` (which implements `RefundPolicy` interface):
 - `NoRefundPolicy` - returns 0
 - `FullRefundPolicy` - returns full amount
 - `TieredRefundPolicy` - ≥7 days: 100%, 3-6 days: 50%, <3 days: 0%

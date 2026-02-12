@@ -6,7 +6,11 @@ import java.time.LocalDate;
 /**
  * No refund policy - used for non-refundable rooms.
  */
-public class NoRefundPolicy implements RefundPolicy {
+public class NoRefundPolicy extends AbstractRefundPolicy {
+
+    public NoRefundPolicy() {
+        super("No Refund");
+    }
 
     @Override
     public double calculateRefund(Booking booking, LocalDate cancelDate) {
